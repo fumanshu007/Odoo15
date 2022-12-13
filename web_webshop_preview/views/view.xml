@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_custom_preview" inherit_id="website_sale.product" active="True" customize_show="True" name="Terms and Conditions" priority="21">
+        <xpath expr="//div[@id='o_product_terms_and_share']" position="after">
+            <t t-if="product.preview_id.preview_item is not False">
+                <div class="container">
+                    <h4>Try the product now!</h4>
+                    <p>
+                        <a href="#" id="preview_btn" class="btn btn-primary my-2 mr-2">Preview</a>
+                    </p>
+                    <p id="preview_type" t-field="product.preview_id.preview_item" style="display:none;"></p>
+                    <p id="product_id" t-field="product.preview_id.id" style="display:none;"></p>
+                </div>
+                <div class="container hidden" id="preview_box">
+                    <video  class="input_video"></video>
+                    <canvas class="output_canvas" width="640px" height="480px"></canvas>
+                </div>
+            </t>
+        </xpath>
+    </template>
+    <data>
+
+        <record model="ir.ui.view" id="product_template_form_view">
+            <field name="name">product.template.product.website.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <!-- add state field in header -->
+                <xpath expr="//field[@name='detailed_type']" position="after">
+                    <field name="preview_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="web_webshop_preview_form_view">
+            <field name="name">web.webshop.preview.form</field>
+            <field name="model">web.webshop.preview</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="image" widget="image"/>
+                            <field name="name" />
+                            <field name="preview_item" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="web_webshop_preview_tree_view" model="ir.ui.view">
+            <field name="name">web.webshop.preview.tree</field>
+            <field name="model">web.webshop.preview</field>
+            <field name="arch" type="xml">
+                <tree string="_tree">
+                    <field name="name"/>
+                    <field name="preview_item"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="preview_action_website" model="ir.actions.act_window">
+            <field name="name">Previews</field>
+            <field name="res_model">web.webshop.preview</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new preview
+                </p><p>
+                    A preview can be used for products.
+                </p>
+            </field>
+        </record>
+    </data>
+
+
+    <menuitem id="menu_preview" name="Previews"
+        parent="website.menu_website_configuration" sequence="12"/>
+    <menuitem id="menu_preview_preview" name="Previews"
+        action="preview_action_website"
+        parent="menu_preview" sequence="10"/>
+
+</odoo>

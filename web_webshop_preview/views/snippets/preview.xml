@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+   <template id="snippet_preview" name="Preview">
+        <section class="container-fluid p-0">
+            <div class="bg-light-gradient p-4">
+                <div class="container">
+                    <div class="col-md-7 px-0 py-md-5">
+                        <h1>Try the product now!</h1>
+                        <p>
+                            <a href="#" id="preview_btn" class="btn btn-primary my-2 mr-2">Preview</a>
+                        </p>
+                    </div>
+                      <div class="container hidden" id="preview_box">
+                        <video class="input_video hidden"></video>
+                        <canvas class="output_canvas" width="640px" height="480px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+   </template>
+
+</odoo>
